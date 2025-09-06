@@ -258,7 +258,7 @@ export default {
                     onSuccess: async (result) => {
                         try {
                             await axios.post(
-                                'http://127.0.0.1:8000/api/order',
+                                'http://127.0.0.1:8000/api/nusantara/order',
                                 {
                                     city: this.city,
                                     address: this.address,
@@ -321,7 +321,7 @@ export default {
     },
 }
 </script>
-<style>
+<style scoped>
 .fixed-img {
     width: 200px;
     height: 200px;

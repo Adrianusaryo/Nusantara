@@ -239,7 +239,7 @@ export default {
         ShowOrder() {
             this.isLoading = true
             axios
-                .get('http://127.0.0.1:8000/api/orders', {
+                .get('http://127.0.0.1:8000/api/nusantara/orders', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -254,9 +254,12 @@ export default {
         async getOrderDetail(id) {
             if (this.orderDetail[id]) return
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/orders/${id}`, {
-                    headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
-                })
+                const response = await axios.get(
+                    `http://127.0.0.1:8000/api/nusantara/orders/${id}`,
+                    {
+                        headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
+                    },
+                )
                 this.orderDetail[id] = response.data.data.order_detail
             } catch (error) {
                 console.error(error)

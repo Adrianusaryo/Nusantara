@@ -27,7 +27,7 @@ class FoodResource extends Resource
     protected static ?string $navigationGroup = 'Menu Management';
     protected static ?int $navigationSort = 1;
 
-    protected static ?string $navigationIcon = 'heroicon-o-book-open';
+    protected static ?string $navigationIcon = 'heroicon-o-photo';
     public static function form(Form $form): Form
     {
         return $form
@@ -54,30 +54,57 @@ class FoodResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('category.category_name'),
-                Tables\Columns\TextColumn::make('price')
-                    ->label('Harga')
-                    ->formatStateUsing(function ($state) {
-                        return 'Rp ' . number_format($state, 0, ',', '.');
-                    }),
-                Tables\Columns\TextColumn::make('desc'),
-                ImageColumn::make('image')
-                    ->width(60)
+                Tables\Columns\Layout\Grid::make(1)
+                    ->schema([
+                        // Gambar makanan
+                        Tables\Columns\ImageColumn::make('image')
+                            ->height(160)
+                            ->width('100%')
+                            ->extraImgAttributes([
+                                'class' => 'rounded-md object-cover w-full h-40',
+                            ]),
+
+                        // Nama
+                        Tables\Columns\TextColumn::make('name')
+                            ->searchable()
+                            ->size('md')
+                            ->weight('bold')
+                            ->alignCenter()
+                            ->extraAttributes(['class' => 'mt-3']),
+
+                        // Kategori
+                        Tables\Columns\TextColumn::make('category.category_name')
+                            ->label('Kategori')
+                            ->alignCenter()
+                            ->color('gray'),
+
+                        // Harga
+                        Tables\Columns\TextColumn::make('price')
+                            ->label('Harga')
+                            ->formatStateUsing(fn($state) => 'Rp ' . number_format($state, 0, ',', '.'))
+                            ->alignCenter()
+                            ->weight('bold'),
+
+                        // Deskripsi
+                        Tables\Columns\TextColumn::make('desc')
+                            ->label('Deskripsi')
+                            ->alignCenter()
+                            ->limit(40)
+                            ->tooltip(fn($state) => $state),
+
+                    ])
             ])
-            ->filters([
-                //
+            ->contentGrid([
+                'md' => 2,
+                'xl' => 4,
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
             ]);
     }
+
+
 
     public static function getRelations(): array
     {

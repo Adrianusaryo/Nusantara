@@ -18,15 +18,15 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-    protected static ?string $breadcrumb = 'Category';
-    protected static ?string $navigationLabel = 'Category';
-    protected static ?string $navigationIcon = 'heroicon-o-swatch';
+    protected static ?string $breadcrumb = 'Cuisine';
+    protected static ?string $navigationLabel = 'Cuisine';
+    protected static ?string $navigationIcon = 'heroicon-o-globe-asia-australia';
     protected static ?string $navigationGroup = 'Menu Management';
     protected static ?int $navigationSort = 2;
 
     public static function getModelLabel(): string
     {
-        return 'Category';
+        return 'Cuisine';
     }
 
     public static function form(Form $form): Form
@@ -42,8 +42,8 @@ class CategoryResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('category_name')->searchable(),
-                TextColumn::make('description')
+                TextColumn::make('category_name')->searchable()->alignCenter()->label('Cuisine'),
+                TextColumn::make('description')->alignCenter()
             ])
             ->filters([
                 //

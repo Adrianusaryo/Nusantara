@@ -18,10 +18,15 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class OrderResource extends Resource
 {
     protected static ?string $model = Order::class;
-    protected static ?string $breadcrumb = 'Order';
-    protected static ?string $navigationLabel = 'Order';
+    protected static ?string $breadcrumb = 'Active Orders';
+    protected static ?string $navigationLabel = 'Active Orders';
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-document-list';
     protected static ?string $navigationGroup = 'Order Management';
+
+    public static function getModelLabel(): string
+    {
+        return 'Active Orders';
+    }
 
     public static function form(Form $form): Form
     {
@@ -55,7 +60,14 @@ class OrderResource extends Resource
                 TextColumn::make('total')->alignCenter()->formatStateUsing(fn($state) => 'IDR ' . number_format($state, 0, ',', '.')),
             ])
             ->filters([
-                //
+                \Filament\Tables\Filters\SelectFilter::make('status')
+                    ->label('Status')
+                    ->options([
+                        'confirmed'  => 'Confirmed',
+                        'preparing'  => 'Preparing',
+                        'checking'   => 'Checking',
+                        'delivering' => 'Delivering',
+                    ])
             ])
             ->actions([
                 Tables\Actions\Action::make('MarkAsPreparing')
@@ -82,10 +94,52 @@ class OrderResource extends Resource
                 Tables\Actions\Action::make('MarkAsDelivered')
                     ->label('Mark as Delivered')
                     ->color('success')
-                    ->icon('heroicon-o-map-pin')
+                    ->icon('heroicon-o-check-badge')
                     ->visible(fn($record) => auth()->user()->hasRole('Driver') && $record->status === 'delivering')
                     ->disabled(fn($record) => $record->status === 'delivered')
                     ->action(fn($record) => $record->update(['status' => 'delivered'])),
+                Tables\Actions\Action::make('Order Details')
+                    ->label('Order Details')
+                    ->icon('heroicon-o-inbox-stack')
+                    ->color('info')
+                    ->modalHeading('Ordered Foods')
+                    ->modalSubheading(fn($record) => 'Order ID: ' . $record->order_id)
+                    ->modalContent(function ($record) {
+                        $html = '<ul class="space-y-4">';
+
+                        foreach ($record->orderDetail as $detail) {
+                            $food = $detail->food;
+
+                            $imageTag = $food
+                                ? "<div class='flex-shrink-0'>
+                    <img src='{$food->image_url}' 
+                         alt='{$food->name}' 
+                         style='width:120px; height:120px; object-fit:cover; border-radius:8px;' />
+               </div>"
+                                : '';
+
+                            $html .= "
+        <li class='flex items-center gap-4 p-3 rounded-xl bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition'>
+            {$imageTag}
+            <div class='flex-1'>
+                <span class='font-semibold text-base block text-gray-800 dark:text-gray-100'>{$food->name}</span>
+                <span class='text-sm text-gray-500 dark:text-gray-400'>Quantity: {$detail->quantity}</span><br>
+<span class='text-sm text-gray-500 dark:text-gray-400'>Price: IDR " . number_format($food->price, 0, ',', '.') . "</span>
+            </div>
+        </li>
+        ";
+                        }
+
+                        $html .= '</ul>';
+
+                        return new \Illuminate\Support\HtmlString($html);
+                    })
+
+
+                    ->modalSubmitAction(false)
+                    ->modalCancelActionLabel('Close')
+                    ->modalFooterActionsAlignment('end')
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -101,9 +155,15 @@ class OrderResource extends Resource
         ];
     }
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()?->can('view_any_order');
+    }
+
     public static function getEloquentQuery(): Builder
     {
-        $query = parent::getEloquentQuery();
+        $query = parent::getEloquentQuery()
+            ->where('status', '!=', 'delivered');
 
         if (auth()->check()) {
             $user = auth()->user();
@@ -113,7 +173,7 @@ class OrderResource extends Resource
             } elseif ($user->hasRole('Driver')) {
                 $query->whereIn('status', ['checking', 'delivering']);
             } elseif ($user->hasRole('Manager')) {
-                $query->where('status', 'delivered');
+                $query->whereIn('status', ['confirmed', 'preparing', 'checking', 'delivering']);
             }
         }
 

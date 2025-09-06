@@ -10,7 +10,7 @@ export const userOrderStore = defineStore('orderStore', {
     actions: {
         async getMenu() {
             try {
-                const response = await axios.get('http://127.0.0.1:8000/api/menu', {
+                const response = await axios.get('http://127.0.0.1:8000/api/nusantara/menu', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 this.menus = response.data.data
