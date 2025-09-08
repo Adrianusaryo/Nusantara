@@ -285,7 +285,7 @@ export default {
 
                             sessionStorage.setItem('OrderID', result.order_id)
                             this.cartStore.clearCart()
-                            window.location.href = '/order'
+                            this.$router.push({ name: 'order' })
                         } catch (error) {
                             console.error(error)
                         }
