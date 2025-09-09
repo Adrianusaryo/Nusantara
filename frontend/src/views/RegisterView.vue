@@ -127,11 +127,19 @@ export default {
     methods: {
         register() {
             axios
-                .post('https://nusantara-production-2267.up.railway.app/api/auth/register', {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
-                })
+                .post(
+                    'https://nusantara-production-2267.up.railway.app/api/auth/register',
+                    {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                    },
+                    {
+                        headers: {
+                            Accept: 'application/json',
+                        },
+                    },
+                )
                 .then((response) => {
                     router.push({ name: 'login' })
                 })
