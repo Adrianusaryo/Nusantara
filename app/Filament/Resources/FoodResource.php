@@ -46,7 +46,6 @@ class FoodResource extends Resource
                         $originalName = $file->getClientOriginalName();
                         return $timestamp . '-' . Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
                     })
-                    ->required()
                     ->imagePreviewHeight('200'),
             ]);
     }
