@@ -242,15 +242,18 @@ export default {
                     name: item.name,
                 }))
 
-                const response = await axios.post('http://127.0.0.1:8000/api/midtrans/token', {
-                    total: this.totalPrice,
-                    items: itemDetails,
-                    name: this.name,
-                    email: this.email,
-                    phone: this.phone,
-                    address: this.address,
-                    city: this.city,
-                })
+                const response = await axios.post(
+                    'https://nusantara-production-e3d2.up.railway.app/api/midtrans/token',
+                    {
+                        total: this.totalPrice,
+                        items: itemDetails,
+                        name: this.name,
+                        email: this.email,
+                        phone: this.phone,
+                        address: this.address,
+                        city: this.city,
+                    },
+                )
 
                 const snapToken = response.data.snap_token
 
@@ -258,7 +261,7 @@ export default {
                     onSuccess: async (result) => {
                         try {
                             await axios.post(
-                                'http://127.0.0.1:8000/api/nusantara/order',
+                                'https://nusantara-production-e3d2.up.railway.app/api/nusantara/order',
                                 {
                                     city: this.city,
                                     address: this.address,
