@@ -111,7 +111,7 @@ export default {
     methods: {
         login() {
             axios
-                .post('https://nusantara-production-2267.up.railway.app/api/auth/login', {
+                .post('https://nusantara-production-e3d2.up.railway.app/api/auth/login', {
                     email: this.email,
                     password: this.password,
                 })

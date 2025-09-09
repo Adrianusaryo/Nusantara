@@ -128,7 +128,7 @@ export default {
         register() {
             axios
                 .post(
-                    'https://nusantara-production-2267.up.railway.app/api/auth/register',
+                    'https://nusantara-production-e3d2.up.railway.app/api/auth/register',
                     {
                         name: this.name,
                         email: this.email,
