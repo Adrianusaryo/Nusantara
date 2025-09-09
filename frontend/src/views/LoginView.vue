@@ -111,7 +111,7 @@ export default {
     methods: {
         login() {
             axios
-                .post('http://127.0.0.1:8000/api/auth/login', {
+                .post('https://nusantara-production-2267.up.railway.app/api/auth/login', {
                     email: this.email,
                     password: this.password,
                 })

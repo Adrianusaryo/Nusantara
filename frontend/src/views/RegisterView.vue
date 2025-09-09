@@ -127,7 +127,7 @@ export default {
     methods: {
         register() {
             axios
-                .post('http://127.0.0.1:8000/api/auth/register', {
+                .post('https://nusantara-production-2267.up.railway.app/api/auth/register', {
                     name: this.name,
                     email: this.email,
                     password: this.password,
