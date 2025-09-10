@@ -11,7 +11,7 @@ export const userOrderStore = defineStore('orderStore', {
         async getMenu() {
             try {
                 const response = await axios.get(
-                    'https://nusantara-production-e3d2.up.railway.app/api/nusantara/menu',
+                    'https://nusantara-production-a567.up.railway.app/api/nusantara/menu',
                     {
                         headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                     },

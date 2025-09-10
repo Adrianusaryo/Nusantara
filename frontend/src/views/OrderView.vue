@@ -239,7 +239,7 @@ export default {
         ShowOrder() {
             this.isLoading = true
             axios
-                .get('https://nusantara-production-e3d2.up.railway.app/api/nusantara/orders', {
+                .get('https://nusantara-production-a567.up.railway.app/api/nusantara/orders', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {

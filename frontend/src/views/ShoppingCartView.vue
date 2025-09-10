@@ -243,7 +243,7 @@ export default {
                 }))
 
                 const response = await axios.post(
-                    'https://nusantara-production-e3d2.up.railway.app/api/midtrans/token',
+                    'https://nusantara-production-a567.up.railway.app/api/midtrans/token',
                     {
                         total: this.totalPrice,
                         items: itemDetails,
@@ -261,7 +261,7 @@ export default {
                     onSuccess: async (result) => {
                         try {
                             await axios.post(
-                                'https://nusantara-production-e3d2.up.railway.app/api/nusantara/order',
+                                'https://nusantara-production-a567.up.railway.app/api/nusantara/order',
                                 {
                                     city: this.city,
                                     address: this.address,
