@@ -12,15 +12,13 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias([
-            'AbleCreateOrder' => \App\Http\Middleware\AbleCreateOrder::class,
-            'AbleFinishOrder' => \App\Http\Middleware\AbleFinishOrder::class,
-            'AbleCreateUser' => \App\Http\Middleware\AbleCreateUser::class,
-            'AbleCreateUpdateItem' => \App\Http\Middleware\AbleCreateUpdateItem::class,
-            'AblePayOrder' => \App\Http\Middleware\AblePayOrder::class,
-            'AbleSeeReport' => \App\Http\Middleware\AbleSeeReport::class,
-            'AdminPanelProvider' => \App\Http\Middleware\AdminPanelAuthenticate::class
-        ]);
+        $middleware->trustProxies(
+            at: '*',
+            headers: \Illuminate\Http\Request::HEADER_X_FORWARDED_FOR
+                | \Illuminate\Http\Request::HEADER_X_FORWARDED_HOST
+                | \Illuminate\Http\Request::HEADER_X_FORWARDED_PORT
+                | \Illuminate\Http\Request::HEADER_X_FORWARDED_PROTO
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
