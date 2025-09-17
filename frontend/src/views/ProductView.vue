@@ -77,7 +77,7 @@ export default {
             items: [],
             successMessage: '',
             productId: '',
-            url: 'http://127.0.0.1:8000/storage/items/',
+            url: 'https://nusantara.up.railway.app/storage/items/',
         }
     },
     mounted() {
@@ -95,7 +95,7 @@ export default {
     methods: {
         getItems() {
             axios
-                .get('http://127.0.0.1:8000/api/item', {
+                .get('https://nusantara.up.railway.app/api/item', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -120,7 +120,7 @@ export default {
         },
         deleteItem(id) {
             axios
-                .delete(`http://127.0.0.1:8000/api/item/${id}`, {
+                .delete(`https://nusantara.up.railway.app/api/item/${id}`, {
                     headers: { Authorization: `Bearer ${this.token}` },
                 })
                 .then((response) => {

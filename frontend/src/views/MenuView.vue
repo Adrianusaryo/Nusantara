@@ -207,7 +207,7 @@ export default {
         return {
             name: '',
             orderStore: userOrderStore(),
-            url: 'http://127.0.0.1:8000/storage/',
+            url: 'https://nusantara.up.railway.app/storage/',
             toastMessage: '',
             isLoading: false,
             currentPage: 1,

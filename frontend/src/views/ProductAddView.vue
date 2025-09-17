@@ -63,7 +63,7 @@ export default {
             token: '',
             name: '',
             role: '',
-            url: 'http://127.0.0.1:8000/storage/items/',
+            url: 'https://nusantara.up.railway.app/storage/items/',
             product_name: '',
             product_price: '',
             errors: {},
@@ -84,7 +84,7 @@ export default {
             formData.append('image_file', this.file)
 
             axios
-                .post('http://127.0.0.1:8000/api/item', formData, {
+                .post('https://nusantara.up.railway.app/api/item', formData, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
                         'Content-Type': 'multipart/form-data',

@@ -181,7 +181,7 @@ export default {
     methods: {
         getOrder() {
             axios
-                .get('http://127.0.0.1:8000/api/order/' + this.$route.params.orderId, {
+                .get('https://nusantara.up.railway.app/api/order/' + this.$route.params.orderId, {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -208,7 +208,7 @@ export default {
             if (this.order.status === 'ordered') {
                 axios
                     .get(
-                        'http://127.0.0.1:8000/api/order/' +
+                        'https://nusantara.up.railway.app/api/order/' +
                             this.$route.params.orderId +
                             '/set-as-done',
                         {
@@ -231,7 +231,7 @@ export default {
             } else if (this.order.status === 'done') {
                 axios
                     .get(
-                        'http://127.0.0.1:8000/api/order/' +
+                        'https://nusantara.up.railway.app/api/order/' +
                             this.$route.params.orderId +
                             '/payment',
                         {

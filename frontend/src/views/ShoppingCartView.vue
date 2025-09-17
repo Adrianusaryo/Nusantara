@@ -183,7 +183,7 @@ export default {
             address: '',
             city: '',
             cartStore: useCartStore(),
-            url: 'http://127.0.0.1:8000/storage/',
+            url: 'https://nusantara.up.railway.app/storage/',
             errors: [],
         }
     },
@@ -243,7 +243,7 @@ export default {
                 }))
 
                 const response = await axios.post(
-                    'https://nusantara-production-a567.up.railway.app/api/midtrans/token',
+                    'https://nusantara.up.railway.app/api/midtrans/token',
                     {
                         total: this.totalPrice,
                         items: itemDetails,
@@ -261,7 +261,7 @@ export default {
                     onSuccess: async (result) => {
                         try {
                             await axios.post(
-                                'https://nusantara-production-a567.up.railway.app/api/nusantara/order',
+                                'https://nusantara.up.railway.app/api/nusantara/order',
                                 {
                                     city: this.city,
                                     address: this.address,

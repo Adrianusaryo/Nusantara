@@ -56,7 +56,7 @@ export default {
             token: '',
             name: '',
             role: '',
-            url: 'http://127.0.0.1:8000/storage/items/',
+            url: 'https://nusantara.up.railway.app/storage/items/',
             productId: '',
             items: {},
         }
@@ -71,7 +71,7 @@ export default {
     methods: {
         showItem() {
             axios
-                .get('http://127.0.0.1:8000/api/item/' + this.productId, {
+                .get('https://nusantara.up.railway.app/api/item/' + this.productId, {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then((response) => {
@@ -92,7 +92,7 @@ export default {
             formData.append('_method', 'patch')
 
             axios
-                .post('http://127.0.0.1:8000/api/item/' + this.productId, formData, {
+                .post('https://nusantara.up.railway.app/api/item/' + this.productId, formData, {
                     headers: {
                         Authorization: `Bearer ${sessionStorage.getItem('token')}`,
                         'Content-Type': 'multipart/form-data',
