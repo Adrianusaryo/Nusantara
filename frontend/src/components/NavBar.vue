@@ -136,7 +136,7 @@ export default {
         },
         logout() {
             axios
-                .get('http://127.0.0.1:8000/api/auth/logout', {
+                .get('https://nusantara.up.railway.app/api/auth/logout', {
                     headers: { Authorization: `Bearer ${sessionStorage.getItem('token')}` },
                 })
                 .then(() => {
